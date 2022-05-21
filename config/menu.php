@@ -81,16 +81,21 @@ return [
         'lable' => 'Đánh Giá',
         'route' => 'Comment.index',
         'icon' => 'fa fa-comments-o',
-        // 'items' => [
-        //     [
-        //         'label' => 'Tất cả bài viết',
-        //         'route' => 'Post.index',
-        //     ],
-        //     [
-        //         'label' => 'Thêm vài viết',
-        //         'route' => 'Post.create',
-        //     ]
-        // ]
+    ],
+    [
+        'lable' => 'Tiện Nghi',
+        'route' => 'Comfort.index',
+        'icon' => 'fa fa-television',
+        'items' => [
+            [
+                'label' => 'Tất tiện nghi',
+                'route' => 'Comfort.index',
+            ],
+            [
+                'label' => 'Thêm tiện nghi',
+                'route' => 'Comfort.create',
+            ]
+        ]
     ],
 ]
 ?>

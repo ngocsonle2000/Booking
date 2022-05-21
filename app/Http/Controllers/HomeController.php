@@ -12,6 +12,7 @@ use App\Models\Hotel;
 use App\Models\KindRoom;
 use App\Models\post;
 use App\Models\promo;
+use App\Models\TienNghi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
@@ -74,10 +75,12 @@ class HomeController extends Controller
                 // ['city', $request->city],
                 ['Status', 0],
             ])->whereNotIn('idUser', [Auth::guard('custom')->user()->id])->get();
-            return view('home.room', compact('searchRoom'));
 
+            return view('home.room', compact('searchRoom'));
         } else {
-            return view('home.room');
+
+            $searchRoom = Hotel::where('Status', 0)->get();
+            return view('home.room', compact('searchRoom'));
         }
     }
     public function City($slug)

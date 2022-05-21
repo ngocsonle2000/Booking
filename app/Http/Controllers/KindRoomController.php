@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\KindRoom\CreateKRequest;
 use App\Models\Hotel;
 use App\Models\KindRoom;
+use App\Models\TienNghi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -33,7 +34,8 @@ class KindRoomController extends Controller
     public function create()
     {
         $hotel = Hotel::where('idUser', Auth::guard('custom')->user()->id)->get();
-        return view('user.KindRoom.create', compact('hotel'));
+        $Comfort = TienNghi::where('idAdmin', Auth::guard('custom')->user()->id)->get();
+        return view('user.KindRoom.create', compact('hotel', 'Comfort'));
     }
 
     /**

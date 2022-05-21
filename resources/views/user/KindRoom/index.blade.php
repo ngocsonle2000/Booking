@@ -31,7 +31,11 @@
                                 $TienNghi = explode('|', $data->TienNghi);
                             @endphp
                             @foreach ($TienNghi as $dataTienNghi)
-                                <p>{{ $dataTienNghi }}</p>
+                                @foreach ($data_TienNghi as $nameTienNghi )
+                                    @if ($dataTienNghi == $nameTienNghi->id)
+                                        {{ $nameTienNghi -> name }} <br>
+                                    @endif
+                                @endforeach
                             @endforeach
                         </td>
                         <td>{{ $data->capacity }}</td>

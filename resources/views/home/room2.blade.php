@@ -89,109 +89,120 @@
             </div>
             <div class="sidebar-wrap bg-light ftco-animate card_booking">
                <form action="{{ route('home.search') }}">
-                  <h3>Chọn lọc theo:</h3>
-                  <hr>
-                  <h3 class="heading mb-4">Loại chỗ ở</h3>
-                  @foreach ($accommodations as $dataAccommodation)
-                  <div class="form-check">
-                     <input type="checkbox" class="form-check-input"
-                     value="{{ $dataAccommodation->slug }}" onclick="myScript()"
-                     name="accommodation"
-                     @if (request()->get('accommodation')) @php
-                     $check = explode(',', request()->get('accommodation'));
-                     @endphp
-                     @foreach ($check as $dataCheck)
-                     @if ($dataCheck == $dataAccommodation->slug)
-                     checked @endif
-                     @endforeach
-                     @endif
-                     >
-                     <label class="form-check-label" for="exampleCheck1">
-                     {{ $dataAccommodation->name }}
-                     </label>
+                    <h3>Chọn lọc theo:</h3>
+                    <hr>
+                    <h3 class="heading mb-4">Loại chỗ ở</h3>
+                    @foreach ($accommodations as $dataAccommodation)
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input"
+                                value="{{ $dataAccommodation->slug }}" onclick="myScript()"
+                                name="accommodation"
+                                @if (request()->get('accommodation'))
+                                    @php
+                                        $check = explode(',', request()->get('accommodation'));
+                                    @endphp
+                                    @foreach ($check as $dataCheck)
+                                        @if ($dataCheck == $dataAccommodation->slug)
+                                            checked
+                                        @endif
+                                    @endforeach
+                                @endif
+                            >
+                            <label class="form-check-label" for="exampleCheck1">
+                                {{ $dataAccommodation->name }}
+                            </label>
+                        </div>
+                    @endforeach
+                    <hr>
+                    <h3 class="heading mb-4">Xếp hạng</h3>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="5" name="rate"
+                            @if (request()->get('rate'))
+                                @php
+                                    $checkRate = explode(',', request()->get('rate'));
+                                @endphp
+                                @foreach ($checkRate as $dataCheck)
+                                    @if ($dataCheck == 5)
+                                        checked
+                                    @endif
+                                @endforeach
+                            @endif
+                        onclick=" checkRate()">
+                        <label class="form-check-label" for="exampleCheck1">
+                            <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
+                            class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="4" name="rate"
+                            @if (request()->get('rate'))
+                                @php
+                                    $checkRate = explode(',', request()->get('rate'));
+                                @endphp
+                                @foreach ($checkRate as $dataCheck)
+                                    @if ($dataCheck == 4)
+                                        checked
+                                    @endif
+                                @endforeach
+                            @endif
+                            onclick=" checkRate()">
+                        <label class="form-check-label" for="exampleCheck1">
+                            <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
+                            class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="3" name="rate"
+                            @if (request()->get('rate'))
+                                @php
+                                    $checkRate = explode(',', request()->get('rate'));
+                                @endphp
+                                @foreach ($checkRate as $dataCheck)
+                                    @if ($dataCheck == 3)
+                                        checked
+                                    @endif
+                                @endforeach
+                            @endif
+                            onclick=" checkRate()">
+                        <label class="form-check-label" for="exampleCheck1">
+                            <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
+                            class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="2" name="rate"
+                            @if (request()->get('rate'))
+                                @php
+                                    $checkRate = explode(',', request()->get('rate'));
+                                @endphp
+                                @foreach ($checkRate as $dataCheck)
+                                    @if ($dataCheck == 2)
+                                    checked @endif
+                                @endforeach
+                                @endif
+                            onclick=" checkRate()">
+                        <label class="form-check-label" for="exampleCheck1">
+                            <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
+                            class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                        </label>
                   </div>
-                  @endforeach
-                  <hr>
-                  <h3 class="heading mb-4">Xếp hạng</h3>
                   <div class="form-check">
-                     <input type="checkbox" class="form-check-input" value="5" name="rate"
-                     @if (request()->get('rate')) @php
-                     $checkRate = explode(',', request()->get('rate'));
-                     @endphp
-                     @foreach ($checkRate as $dataCheck)
-                     @if ($dataCheck == 5)
-                     checked @endif
-                     @endforeach
-                     @endif
-                     onclick=" checkRate()">
-                     <label class="form-check-label" for="exampleCheck1">
-                        <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
-                           class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
-                     </label>
-                  </div>
-                  <div class="form-check">
-                     <input type="checkbox" class="form-check-input" value="4" name="rate"
-                     @if (request()->get('rate')) @php
-                     $checkRate = explode(',', request()->get('rate'));
-                     @endphp
-                     @foreach ($checkRate as $dataCheck)
-                     @if ($dataCheck == 4)
-                     checked @endif
-                     @endforeach
-                     @endif
-                     onclick=" checkRate()">
-                     <label class="form-check-label" for="exampleCheck1">
-                        <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
-                           class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
-                     </label>
-                  </div>
-                  <div class="form-check">
-                     <input type="checkbox" class="form-check-input" value="3" name="rate"
-                     @if (request()->get('rate')) @php
-                     $checkRate = explode(',', request()->get('rate'));
-                     @endphp
-                     @foreach ($checkRate as $dataCheck)
-                     @if ($dataCheck == 3)
-                     checked @endif
-                     @endforeach
-                     @endif
-                     onclick=" checkRate()">
-                     <label class="form-check-label" for="exampleCheck1">
-                        <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
-                           class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-                     </label>
-                  </div>
-                  <div class="form-check">
-                     <input type="checkbox" class="form-check-input" value="2" name="rate"
-                     @if (request()->get('rate')) @php
-                     $checkRate = explode(',', request()->get('rate'));
-                     @endphp
-                     @foreach ($checkRate as $dataCheck)
-                     @if ($dataCheck == 2)
-                     checked @endif
-                     @endforeach
-                     @endif
-                     onclick=" checkRate()">
-                     <label class="form-check-label" for="exampleCheck1">
-                        <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i
-                           class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-                     </label>
-                  </div>
-                  <div class="form-check">
-                     <input type="checkbox" class="form-check-input" value="1" name="rate"
-                     @if (request()->get('rate')) @php
-                     $checkRate = explode(',', request()->get('rate'));
-                     @endphp
-                     @foreach ($checkRate as $dataCheck)
-                     @if ($dataCheck == 1)
-                     checked @endif
-                     @endforeach
-                     @endif
-                     onclick=" checkRate()">
-                     <label class="form-check-label" for="exampleCheck1">
-                        <p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i
-                           class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-                     </label>
+                        <input type="checkbox" class="form-check-input" value="1" name="rate"
+                            @if (request()->get('rate'))
+                                @php
+                                    $checkRate = explode(',', request()->get('rate'));
+                                @endphp
+                                @foreach ($checkRate as $dataCheck)
+                                    @if ($dataCheck == 1)
+                                        checked
+                                    @endif
+                                @endforeach
+                            @endif
+                            onclick=" checkRate()">
+                        <label class="form-check-label" for="exampleCheck1">
+                            <p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i
+                            class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                        </label>
                   </div>
                   <div class="form-group">
                      <button type="submit" class="btn btn-primary py-3 px-5">Lọc</button>
@@ -211,41 +222,41 @@
                             </a>
                             <div class="text p-3 text-center">
                                 <h3 class="mb-3"><a
-                                href="{{ route('home.hotel_room', [
-                                $room_data->slug,
-                                $room_data->id,
-                                $room_data->city,
-                                'checkin' => request()->get('checkin'),
-                                'checkout' => request()->get('checkout'),
-                                'guests' => request()->get('guests'),
-                                ]) }}">{{ $room_data->name }}</a>
+                                    href="{{ route('home.hotel_room', [
+                                    $room_data->slug,
+                                    $room_data->id,
+                                    $room_data->city,
+                                    'checkin' => request()->get('checkin'),
+                                    'checkout' => request()->get('checkout'),
+                                    'guests' => request()->get('guests'),
+                                    ]) }}">{{ $room_data->name }}</a>
                                 </h3>
                                 <p>
                                 <span class="price mr-2">
                                 @php
-                                $date = abs(strtotime(request()->get('checkout')) - strtotime(request()->get('checkin')));
-                                $numDay = floor($date / (60 * 60 * 24));
-                                if (
-                                DB::table('kindrooms')
-                                ->where([['idHotel', $room_data->id], ['sale_price', '>', 0]])
-                                ->min('sale_price')
-                                ) {
-                                $price_sale = DB::table('kindrooms')
-                                ->where([['idHotel', $room_data->id]])
-                                ->min('sale_price');
-                                $count = $price_sale * $numDay;
-                                echo $count . '$';
+                                    $date = abs(strtotime(request()->get('checkout')) - strtotime(request()->get('checkin')));
+                                    $numDay = floor($date / (60 * 60 * 24));
+                                    if (
+                                        DB::table('kindrooms')
+                                            ->where([['idHotel', $room_data->id], ['sale_price', '>', 0]])
+                                            ->min('sale_price')
+                                    ) {
+                                        $price_sale = DB::table('kindrooms')
+                                            ->where([['idHotel', $room_data->id]])
+                                            ->min('sale_price');
+                                        $count = $price_sale * $numDay;
+                                    echo $count . '$';
                                 } else {
-                                $price = DB::table('kindrooms')
-                                ->where([['idHotel', $room_data->id]])
-                                ->min('price');
-                                $count = $price * $numDay;
-                                echo $count . '$';
+                                    $price = DB::table('kindrooms')
+                                        ->where([['idHotel', $room_data->id]])
+                                    ->min('price');
+                                    $count = $price * $numDay;
+                                    echo $count . '$';
                                 }
                                 @endphp
                                 </span><span class="per">
                                 @php
-                                echo $numDay . ' đêm, ' . request()->get('guests') . ' người';
+                                    echo $numDay . ' đêm, ' . request()->get('guests') . ' người';
                                 @endphp
                                 </span>
                                 </p>
@@ -311,10 +322,10 @@
                                 <p>
                                     <span class="price mr-2">
                                     @php
-                                    $check = DB::table('kindrooms')
-                                    ->where('idHotel', $hotel->id)
-                                    ->min('price');
-                                    echo $check . '$';
+                                        $check = DB::table('kindrooms')
+                                            ->where('idHotel', $hotel->id)
+                                            ->min('price');
+                                        echo $check . '$';
                                     @endphp
                                     </span>
                                     <span class="per">

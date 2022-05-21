@@ -201,22 +201,88 @@
                  <div class="col-lg-9" >
                     @if (request()->get('checkout'))
                         @foreach ($searchRoom as $room_data)
-                            <div class="card card_booking" style="margin-bottom: 2%">
+                            <div class="card card_booking"  style="margin-bottom: 2%;">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <img src="{{ url('public/upload') }}/{{ $room_data->img }}" alt=""
-                                            class="img " style="width: 100%; margin: 2%">
+                                            <div style="width: auto;">
+                                                <img src="{{ url('public/upload') }}/{{ $room_data->img }}" alt="" class="img "
+                                                style="width: 200px; height: 200px; margin: 3%; border-radius: 3%">
+                                            </div>
                                         </div>
                                         <div class="col-md-9">
-                                            <h4>{{ $room_data -> name }}</h4>
+                                            <div class="row">
+                                                <div class="col-md-7" style="margin-left: 2%" >
+                                                    <h4 >{{ $room_data -> name }}</h4>
+                                                    <a href="#" >{{ $room_data -> adrress }}</a><br>
+                                                    @foreach ($data_TienNghi as $TienNghi)
+                                                        @php
+                                                            $explode = explode('|', $TienNghi -> idHotel);
+                                                        @endphp
+                                                        @foreach ($explode as $idExplode)
+                                                            @if ($idExplode == $room_data -> id)
+                                                                <span style="color: rgb(6, 175, 6)">{{ $TienNghi -> name }}</span><br>
+                                                            @endif
+                                                        @endforeach
+                                                    @endforeach
+                                                </div>
+                                                <div class="col-md-4" style="margin-left: 6%">
+                                                    <div style="margin-left: 15%">
+                                                        <h4>
+                                                            Tuyệt vời
+                                                        </h4>
+                                                        @php
+                                                            $commentTotal = DB::table('comments')->where('idHotel', $room_data->id)->count();
+                                                            if($commentTotal == 0){
+                                                                echo 'Chưa có đánh giá';
+                                                            }else{
+                                                                echo $commentTotal.' đánh giá';
+                                                            }
+                                                        @endphp
+                                                    </div>
+                                                    <div style="margin-top: 25%; margin-left: 20%">
+
+                                                            @php
+                                                                $date = abs(strtotime(request()->get('checkout')) - strtotime(request()->get('checkin')));
+                                                                $numDay = floor($date / (60 * 60 * 24));
+                                                                if (
+                                                                    DB::table('kindrooms')
+                                                                        ->where([['idHotel', $room_data->id], ['sale_price', '>', 0]])
+                                                                        ->min('sale_price')
+                                                                ) {
+                                                                    $price_sale = DB::table('kindrooms')
+                                                                        ->where([['idHotel', $room_data->id]])
+                                                                        ->min('sale_price');
+                                                                    $count = $price_sale * $numDay;
+                                                                    echo ' <h4 style="color: red; margin-left: 20% ">'.$count.'$ </h4>';
+                                                                    echo '<span class="per">1 Phòng, 1 Ngày</span>';
+                                                                } else {
+                                                                    $price = DB::table('kindrooms')
+                                                                        ->where([['idHotel', $room_data->id]])
+                                                                    ->min('price');
+                                                                    $count = $price * $numDay;
+                                                                    echo $count . '$';
+                                                                }
+                                                            @endphp
+
+                                                        <a href="{{ route('home.hotel_room', [
+                                                            $room_data->slug,
+                                                            $room_data->id,
+                                                            $room_data->city,
+                                                            'checkin' => request()->get('checkin'),
+                                                            'checkout' => request()->get('checkout'),
+                                                            'guests' => request()->get('guests'),
+                                                            ]) }}" class="btn btn-primary">Xem Ngay <span class="icon-long-arrow-right"></span></a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     @else
-                        @foreach ($data_Hotel as $room_data)
+                        @foreach ($searchRoom as $room_data)
                             <div class="card card_booking" style="margin-bottom: 2%">
                                 <div class="container">
                                     <div class="row">
@@ -227,7 +293,49 @@
                                             </div>
                                         </div>
                                         <div class="col-md-9">
-                                            <h4>{{ $room_data -> name }}</h4>
+                                            <div class="row">
+                                                <div class="col-md-7" style="margin-left: 2%" >
+                                                    <h4 >{{ $room_data -> name }}</h4>
+                                                    <a href="#" >{{ $room_data -> adrress }}</a><br>
+                                                    @foreach ($data_TienNghi as $TienNghi)
+                                                        @php
+                                                            $explode = explode('|', $TienNghi -> idHotel);
+                                                        @endphp
+                                                        @foreach ($explode as $idExplode)
+                                                            @if ($TienNghi-> idAdmin == $room_data -> idUser && ($idExplode == $room_data -> id || $idExplode == 0))
+                                                                <span style="color: rgb(6, 175, 6)">{{ $TienNghi -> name }}</span><br>
+                                                            @endif
+                                                        @endforeach
+                                                    @endforeach
+                                                </div>
+                                                <div class="col-md-4" style="margin-left: 6%">
+                                                    <div style="margin-left: 20%">
+                                                        <h4>
+                                                            Tuyệt vời
+                                                        </h4>
+                                                        @php
+                                                            $commentTotal = DB::table('comments')->where('idHotel', $room_data->id)->count();
+                                                            if($commentTotal == 0){
+
+                                                            }else{
+                                                                echo $commentTotal.' đánh giá';
+                                                            }
+                                                        @endphp
+                                                    </div>
+                                                    <div style="margin-top: 25%; margin-left: 20%">
+                                                        <h4 style="color: red; margin-left: 20% ">
+                                                            @php
+                                                                $check = DB::table('kindrooms')
+                                                                    ->where('idHotel', $room_data->id)
+                                                                    ->min('price');
+                                                                echo $check . '$';
+                                                            @endphp
+                                                        </h4>
+                                                        <a href="{{ route('home.hotel_room', [$room_data->slug, $room_data->id, $room_data->city]) }}"
+                                                            class="btn btn-primary">Xem Phòng</span></a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

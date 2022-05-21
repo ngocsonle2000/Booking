@@ -55,8 +55,9 @@ Route::group(['prefix' => 'user'], function(){
         'Hotel'    => 'HotelControler',
         'Booking'  => 'BookingController',
         'Post'     => 'PostController',
-        'Promo'    => 'PromoCodeController'
-        // 'Comment'  => 'CommentController'
+        'Promo'    => 'PromoCodeController',
+        'Comment'  => 'CommentController',
+        'Comfort'  => 'TienNghiController',
     ]);
     Route::get('/{id}', 'DasboardController@hotel')->name('room.hotel');
 });
@@ -91,4 +92,5 @@ Route::group(['prefix' => 'API'], function(){
     Route::post('/date-filter', 'ApiController@dateFilter')->name('date-filter');
     Route::post('/HotelBrand', 'ApiController@HotelBrand')->name('HotelBrand');
     Route::post('/ApplyPromo', 'ApiController@ApplyPromo')->name('ApplyPromo');
+    Route::post('/branchHotel_Confort', 'ApiController@branchHotel_Confort')->name('branchHotel_Confort');
 });

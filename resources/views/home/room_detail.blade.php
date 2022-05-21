@@ -274,6 +274,7 @@
                     <div class="col-md-12 room-single ftco-animate mb-5 mt-5">
                         <h4 class="mb-4">Review &amp; Ratings</h4>
                         @php
+
                             $viewComment = DB::table('comments')->where('idHotel', $id)->count();
                             echo '<b>Đang hiển thị '.$viewComment.' nhận xét</b>'
                         @endphp
@@ -281,60 +282,60 @@
                         <hr>
 
                             @foreach ($dataHotel as $comment)
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <p><b>
-                                        @foreach ($comment -> User as $dataUser )
-                                            {{ $dataUser -> username }}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p><b>
+                                            @foreach ($comment -> User as $dataUser )
+                                                {{ $dataUser -> username }}
 
-                                        @endforeach
-                                    </b></p>
-                                    <span>
-                                        @foreach ($comment -> Code as $dataCode)
-                                            <p>
-                                                <i class="fa fa-suitcase" aria-hidden="true"></i>&nbsp;
-                                                {{ $dataCode -> NameRoom }}
-                                            </p>
-                                            <p>
-                                                <i class="fa fa-calendar" aria-hidden="true"></i></i>&nbsp; Ngày Đến: {{ $dataCode -> NextDay }}
-                                            </p>
-                                            <p>
-                                                <i class="fa fa-calendar" aria-hidden="true"></i></i>&nbsp; Ngày Đi: {{ $dataCode -> OutDay }}
-                                            </p>
-                                        @endforeach
+                                            @endforeach
+                                        </b></p>
+                                        <span>
+                                            @foreach ($comment -> Code as $dataCode)
+                                                <p>
+                                                    <i class="fa fa-suitcase" aria-hidden="true"></i>&nbsp;
+                                                    {{ $dataCode -> NameRoom }}
+                                                </p>
+                                                <p>
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i></i>&nbsp; Ngày Đến: {{ $dataCode -> NextDay }}
+                                                </p>
+                                                <p>
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i></i>&nbsp; Ngày Đi: {{ $dataCode -> OutDay }}
+                                                </p>
+                                            @endforeach
 
-                                    </span>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="container" style="border-radius: 10px; background-color: #f5f5f5">
-                                        <p>
-                                            <b>"{{ $comment-> Comment}}"</b>
-                                        </p>
-                                        <hr>
-                                        Đã nhận xét vào ngày
-                                        @php
-                                            $covertDate = date('d-m-Y', strtotime($comment -> created_at));
-                                            echo $covertDate;
-                                        @endphp
-
+                                        </span>
                                     </div>
-                                    @php
-                                        $checkComment = DB::table('comments')->where('parent_id', $comment->id)->get();
-                                    @endphp
-                                    @foreach ($checkComment as $dataCheck )
-                                        @if ($dataCheck)
-                                            <div class="row" style="margin-left: 0">
-                                                <div class="box arrow-top col-md-8">
-                                                    {{ $dataCheck -> Comment }}
+                                    <div class="col-md-8">
+                                        <div class="container" style="border-radius: 10px; background-color: #f5f5f5">
+                                            <p>
+                                                <b>"{{ $comment-> Comment}}"</b>
+                                            </p>
+                                            <hr>
+                                            Đã nhận xét vào ngày
+                                            @php
+                                                $covertDate = date('d-m-Y', strtotime($comment -> created_at));
+                                                echo $covertDate;
+                                            @endphp
+
+                                        </div>
+                                        @php
+                                            $checkComment = DB::table('comments')->where('parent_id', $comment->id)->get();
+                                        @endphp
+                                        @foreach ($checkComment as $dataCheck )
+                                            @if ($dataCheck)
+                                                <div class="row" style="margin-left: 0">
+                                                    <div class="box arrow-top col-md-8">
+                                                        {{ $dataCheck -> Comment }}
+                                                    </div>
+                                                    <div class="col-md-4 box-name" style="margin-top: 5%">
+                                                        <p><b>Phản hồi của chổ nghỉ</b></p>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-4 box-name" style="margin-top: 5%">
-                                                    <p><b>Phản hồi của chổ nghỉ</b></p>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div><hr>
-                            </div><br>
+                                            @endif
+                                        @endforeach
+                                    </div><hr>
+                                </div><br>
                             @endforeach
 
                     </div>

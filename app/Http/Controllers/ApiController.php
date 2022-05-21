@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\promo;
+use App\Models\TienNghi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -178,5 +179,24 @@ class ApiController extends Controller
             );
         }
         echo json_encode($chart_data);
+    }
+    public function branchHotel_Confort(Request $request){
+        $data = $request->all();
+        $AllComfort = TienNghi::where('idAdmin', Auth::guard('custom')->user()->id)->get();
+        foreach($AllComfort as $idComfort){
+            $explode = explode('|', $idComfort->idHotel);
+            foreach($explode as $key => $val){
+                if($val == $data['branchHotel_Confort'] || $val == 0){
+                    $chart_data[] = array(
+                        'id'    => $idComfort->id,
+                        'name'   => $idComfort->name
+                    );
+                }
+            }
+
+        }
+        echo json_encode($chart_data);
+
+
     }
 }

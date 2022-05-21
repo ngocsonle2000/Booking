@@ -30,6 +30,9 @@ class KindRoom extends Model
     public function Hotel(){
         return $this -> hasMany(Hotel::class, 'id', 'idHotel');
     }
+    public function Comfort(){
+        return $this -> hasMany(TienNghi::class, 'id', 'idTienNghi');
+    }
     public function scopeSearch($query)
     {
         if($key = request()->key){

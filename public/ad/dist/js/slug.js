@@ -11,7 +11,7 @@ $('input#name').keyup(function(event) {
     slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ế|ề|ể|ẽ|ẹ|ê/gi, 'e');
     slug = slug.replace(/í|ì|ỉ|ĩ|ị/gi, 'i');
     slug = slug.replace(/ó|ò|ỏ|õ|ọ|ố|ồ|ổ|ỗ|ộ|ớ|ờ|ở|ỡ|ợ|ơ/gi, 'o');
-    slug = slug.replace(/ú|ù|ủ|ũ|ụ|ứ|ừ|ử|ữ|ự/gi, 'u');
+    slug = slug.replace(/ú|ù|ủ|ũ|ụ|ứ|ừ|ử|ữ|ự|ư/gi, 'u');
     slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
     slug = slug.replace(/đ/gi, 'd');
 

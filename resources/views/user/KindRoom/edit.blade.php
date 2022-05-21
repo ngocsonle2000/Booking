@@ -42,19 +42,32 @@
            <th> <label for="my-input">Gía Gốc</label></th>
            <th> <label for="my-input">Gía Giảm</label></th>
            <tr>
-               <td class="col-md-3">
-                    @foreach ($data_TienNghi as $dataTN)
-                        <input type="checkbox" name="TienNghi[]"  value="{{ $dataTN -> name }}"
+                <td class="col-md-3">
+                    <ul class="TienNghi">
+                        @foreach ($data_TienNghi as $dataTN)
                             @php
-                                $id = explode('|', $KindRoom -> TienNghi)
+                                $explode = explode('|', $dataTN->idHotel);
                             @endphp
-                            @foreach ($id as $data_id )
-                                @if ($data_id == $dataTN -> name)
-                                    checked
+                            @foreach ($explode as $nameComfort )
+                                @if ($dataTN->idAdmin == Auth::guard('custom')->user()->id && ($nameComfort == $KindRoom->idHotel || $nameComfort == 0) )
+                                    <li style="list-style-type: none;">
+                                        <input type="checkbox" name="TienNghi[]"  value="{{ $dataTN -> id }}"
+                                        @php
+                                            $id = explode('|', $KindRoom -> TienNghi)
+                                        @endphp
+                                        @foreach ($id as $data_id )
+                                            @if ($data_id == $dataTN -> id)
+                                                checked
+                                            @endif
+                                        @endforeach>
+                                    {{ $dataTN -> name }}
+                                    </li>
                                 @endif
-                            @endforeach>
-                        {{ $dataTN -> name }}
-                    @endforeach
+                            @endforeach
+
+                        @endforeach
+                    </ul>
+
                     {{-- @error('quantity')
                         <small class="help-block">{{ $message }}</small>
                     @enderror --}}

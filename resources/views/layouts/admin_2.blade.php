@@ -77,7 +77,6 @@ $menuAdmin = config('menuAdmin');
                         _token: _token
                     },
                     success: function(data) {
-                        console.log(data);
                         var divRoom = document.getElementById('HotelRoom');
                         divRoom.innerHTML = ' <option value="0"> Chọn tất cả </option>';
                         $.each(data, function(key, index) {
@@ -127,8 +126,31 @@ $menuAdmin = config('menuAdmin');
                             chartDT.series[0].update({
                                 data: data
                             });
-                            console.log(dt);
                         }
+                    }
+                })
+            });
+
+            $('.branchHotel_Confort').change(function() {
+                var branchHotel_Confort = $(this).val();
+                var _token = $('input[name= "_token"]').val();
+                $.ajax({
+                    url: "{{ url('/API/branchHotel_Confort') }}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        branchHotel_Confort: branchHotel_Confort,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        var HotelComfort = document.getElementById('HotelComfort');
+                        $.each(data, function(key, index) {
+                            HotelComfort.innerHTML +=
+                                `<li style="list-style-type: none;">
+                                    <input type="checkbox" name="TienNghi[]" value="${index.id}">
+                                    <span>${index.name}</span>
+                                </li>`;
+                        })
                     }
                 })
             });

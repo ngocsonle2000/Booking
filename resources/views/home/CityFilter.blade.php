@@ -38,26 +38,31 @@
                     <div class="col-lg-3 sidebar">
                         <div class="sidebar-wrap bg-light ftco-animate">
                             <h3 class="heading mb-4">Tìm</h3>
-                            <form action="{{ route('home.search') }}">
+
+                            <form autocomplete="off" method="post">
+                                @csrf
                                 <div class="fields">
                                     <div class="form-group">
-                                        <input type="text" id="checkin_date" name="checkin"
-                                            class="form-control checkin_date" placeholder="Ngày đến">
+                                        <input type="text"  name="checkin"
+                                            class="form-control checkin_date" placeholder="Ngày đến" id="date_to">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" id="checkin_date" name="checkout"
-                                            class="form-control checkout_date" placeholder="Ngày đi">
+                                        <input type="text"  name="checkout"
+                                            class="form-control checkout_date" placeholder="Ngày đi" id="date_form">
                                     </div>
                                     <div class="form-group">
                                         <div class="select-wrap one-third">
-                                            {{-- <div class="icon"><span class="ion-ios-arrow-down"></span></div> --}}
-                                            <input type="text" id="checkin_date" class="form-control"
-                                                placeholder="Thành phố" name="city">
+                                            <select class="form-control" name="city" id="city">
+                                                <option value="">Thành Phố </option>
+                                                @foreach ($city as $dataCity )
+                                                    <option value="{{ $dataCity -> slug }}">{{ $dataCity -> name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="select-wrap one-third">
-                                            <input type="text" class="form-control" placeholder="Số người" name="guests">
+                                            <input type="text" class="form-control" placeholder="Số người" name="guests" id="guests">
                                         </div>
                                     </div>
 
@@ -75,7 +80,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary py-3 px-5">Search</button>
+                                        <button type="button" class="btn btn-primary py-3 px-5" id="btn_search">Search</button>
                                         <script>
                                             var slider = document.getElementById("myRange");
                                             var output = document.getElementById("demo");
@@ -89,6 +94,7 @@
                                     </div>
                                 </div>
                             </form>
+
                         </div>
                         <div class="sidebar-wrap bg-light ftco-animate">
                             <form action="{{ route('home.search') }}">
@@ -162,9 +168,64 @@
     </div>
     </div>
     <div class="col-lg-9">
-        <div class="row">
+        <div class="row" id="searchHotel">
             @foreach ($data as $dataCity)
-                <div class="col-sm col-md-6 col-lg-6 ftco-animate">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div style="width: auto;">
+                                <img src="{{ url('public/upload') }}/{{ $dataCity->img }}" alt=""
+                                class="img " style="width: 200px; height: 200px; margin: 3%; border-radius: 3%">
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-7" style="margin-left: 2%" >
+                                    <h4 >{{ $dataCity -> name }}</h4>
+                                    <a href="#" >{{ $dataCity -> adrress }}</a><br>
+                                    @foreach ($data_TienNghi as $TienNghi)
+                                        @php
+                                            $explode = explode('|', $TienNghi -> idHotel);
+                                        @endphp
+                                        @foreach ($explode as $idExplode)
+                                            @if ($TienNghi-> idAdmin == $dataCity -> idUser && ($idExplode == $dataCity -> id || $idExplode == 0))
+                                                <span style="color: rgb(6, 175, 6)">{{ $TienNghi -> name }}</span><br>
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                </div>
+                                <div class="col-md-4" style="margin-left: 6%">
+                                    <div style="margin-left: 20%">
+                                        <h4>
+                                            Tuyệt vời
+                                        </h4>
+                                        @php
+                                            $commentTotal = DB::table('comments')->where('idHotel', $dataCity->id)->count();
+                                            if($commentTotal == 0){
+
+                                            }else{
+                                                echo $commentTotal.' đánh giá';
+                                            }
+                                        @endphp
+                                    </div>
+                                    <div style="margin-top: 25%; margin-left: 20%">
+                                        <h4 style="color: red; margin-left: 20% ">
+                                            @php
+                                                $check = DB::table('kindrooms')
+                                                    ->where('idHotel', $dataCity->id)
+                                                    ->min('price');
+                                                echo $check . '$';
+                                            @endphp
+                                        </h4>
+                                        <a href="{{ route('home.hotel_room', [$dataCity->slug, $dataCity->id, $dataCity->city]) }}"
+                                            class="btn btn-primary">Xem Phòng</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="col-sm col-md-6 col-lg-6 ftco-animate">
                     <div class="room">
                         <a href="rooms-single.html" class="img d-flex justify-content-center align-items-center">
                             <img src="{{ url('public/upload') }}/{{ $dataCity->img }}" alt="" class="img "
@@ -190,7 +251,7 @@
                             </p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             @endforeach
         </div>
     </div>

@@ -94,13 +94,13 @@
                           @foreach ($accommodations as $dataAccommodation)
                           <div class="form-check">
                              <input type="checkbox" class="form-check-input"
-                             value="{{ $dataAccommodation->slug }}" onclick="myScript()"
-                             name="accommodation"
+                                value="{{ $dataAccommodation->slug }}" onclick="myScript()"
+                                name="accommodation"
                              @if (request()->get('accommodation')) @php
-                             $check = explode(',', request()->get('accommodation'));
+                                $check = explode(',', request()->get('accommodation'));
                              @endphp
                              @foreach ($check as $dataCheck)
-                             @if ($dataCheck == $dataAccommodation->slug)
+                                 @if ($dataCheck == $dataAccommodation->slug)
                              checked @endif
                              @endforeach
                              @endif

@@ -102,6 +102,7 @@ $menuAdmin = config('menuAdmin');
                             chartDT.series[0].update({
                                 data: data
                             });
+
                         }
                     }
                 })

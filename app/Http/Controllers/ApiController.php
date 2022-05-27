@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hotel;
 use App\Models\promo;
 use App\Models\TienNghi;
 use Illuminate\Http\Request;
@@ -197,6 +198,38 @@ class ApiController extends Controller
         }
         echo json_encode($chart_data);
 
+
+    }
+    public function btnSearch(Request $request){
+        $data = $request->all();
+        if (Auth::guard('custom')->check()) {
+            $check = Hotel::where([
+                ['city', $data['city']],
+                ['Status', 0],
+            ])->whereNotIn('idUser', [Auth::guard('custom')->user()->id])->get();
+        }else{
+            $check = Hotel::where([
+                ['city', $data['branchHotel_Confort']],
+                ['Status', 0],
+            ])->get();
+        }
+        foreach ($check as $key => $value) {
+            $chart_data[] = array(
+                'date_form'         => $request->date_form,
+                'date_to'           => $request->date_to,
+                'city'              => $request->city,
+                'nameHotel'         => $value->name,
+                'accommodation'     => $value->city,
+                'adrress'           => $value->adrress,
+                'img'               => $value->img,
+                'idUser'            => $value->idUser,
+                'slug'              => $value->slug,
+                'Status'            => $value->Status,
+                'guests'            => $request->guests,
+                'id'                => $value->city,
+            );
+        }
+        echo json_encode($chart_data);
 
     }
 }

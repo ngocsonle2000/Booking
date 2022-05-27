@@ -8,6 +8,7 @@ use App\Models\banner;
 use App\Models\bookroom;
 use App\Models\city;
 use App\Models\comment;
+use App\Models\CommentBlog;
 use App\Models\Hotel;
 use App\Models\KindRoom;
 use App\Models\post;
@@ -86,7 +87,8 @@ class HomeController extends Controller
     public function City($slug)
     {
         $data = Hotel::where('city', $slug)->get();
-        return view('home.CityFilter', compact('data'));
+        $city = city::all();
+        return view('home.CityFilter', compact('data', 'city'));
     }
     public function accommodation($slug)
     {
@@ -150,7 +152,8 @@ class HomeController extends Controller
     public function post_details($slug)
     {
         $details = post::where('slug', $slug)->get();
-        return view('home.post_details', compact('details'));
+        $comment = CommentBlog::where('slug_blog', $slug)->where('parent_id', 0)->get();
+        return view('home.post_details', compact('details', 'comment'));
     }
 
     public function order()

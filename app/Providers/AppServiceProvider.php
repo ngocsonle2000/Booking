@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Comment;
 use App\Models\accommodation;
 use App\Models\Accommodation as ModelsAccommodation;
 use App\Models\accommodations;
 use App\Models\banner;
 use App\Models\city;
+use App\Models\CommentBlog;
 use App\Models\Hotel;
 use App\Models\KindRoom;
 use App\Models\permission;
@@ -38,12 +40,13 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
         view()->composer('*',  function($view){
             $view->with([
-                'data_KindRoomAll' => KindRoom::all(),
-                'data_TienNghi'    => TienNghi::all(),
-                'data_Hotel'       => Hotel::all(),
-                'banner'           => banner::all(),
+                'data_KindRoomAll'  => KindRoom::all(),
+                'data_TienNghi'     => TienNghi::all(),
+                'data_Hotel'        => Hotel::all(),
+                'banner'            => banner::all(),
                 'citys'             => city::all(),
                 'accommodations'    => Accommodation::all(),
+                'commentBlog'       => CommentBlog::all(),
             ]);
         });
     }

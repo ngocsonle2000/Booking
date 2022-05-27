@@ -31,9 +31,60 @@
     <link rel="stylesheet" href="{{ url('public/home') }}/css/icomoon.css">
     <link rel="stylesheet" href="{{ url('public/home') }}/css/style.css">
     <style>
-        body{
+        body {
             background-color: white
         }
+
+        .form-color {
+
+            background-color: #fafafa;
+
+        }
+
+        .form-control {
+
+            height: 48px;
+            border-radius: 25px;
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #35b69f;
+            outline: none;
+            box-shadow: none;
+            text-indent: 10px;
+        }
+
+        .c-badge {
+            background-color: #35b69f;
+            color: white;
+            height: 20px;
+            font-size: 11px;
+            width: 92px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2px;
+        }
+
+        .comment-text {
+            font-size: 13px;
+        }
+
+        .wish {
+
+            color: #35b69f;
+        }
+
+
+        .user-feed {
+
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
         .card_deatils {
             width: 100%;
             height: 100%;
@@ -167,14 +218,70 @@
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important
         }
 
-
-
-
-
-
     </style>
     <script>
         $(document).ready(function() {
+            $('#btn_search').click(function() {
+
+                var date_form = $('#date_form').val();
+                var date_to = $('#date_to').val();
+                var city = $('#city').val();
+                var guests = $('#guests').val();
+                var _token = $('input[name= "_token"]').val();
+                $.ajax({
+                    url: "{{ url('/API/btnSearch') }}",
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        date_form: date_form,
+                        date_to: date_to,
+                        city: city,
+                        guests: guests,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        var searchHotel = document.getElementById('searchHotel');
+                        $.each(data, function(key, dt) {
+                            searchHotel.innerHTML = `
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div style="width: auto;">
+                                            <img src="{{ url('public/upload') }}/${dt.img} " alt=""
+                                            class="img " style="width: 200px; height: 200px; margin: 3%; border-radius: 3%">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-md-7" style="margin-left: 2%" >
+                                                <h4 >${dt.nameHotel}</h4>
+                                                <a href="#" >${dt.adrress}</a><br>
+
+                                            </div>
+                                            <div class="col-md-4" style="margin-left: 6%">
+                                                <div style="margin-left: 20%">
+                                                    <h4>
+                                                        Tuyệt vời
+                                                    </h4>
+
+                                                </div>
+                                                <div style="margin-top: 25%; margin-left: 20%">
+                                                    <h4 style="color: red; margin-left: 20% ">
+
+                                                    </h4>
+                                                    <a href="{{ route('home.hotel_room', [${dt.slug},${dt.id}, ${dt.city}]) }}"
+                                                        class="btn btn-primary">Xem Phòng</span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                        })
+                    }
+                })
+            });
             $('#btn-promo').click(function() {
 
                 var promoDetails = $('#promoDetails').val();
@@ -436,6 +543,7 @@
     <script src="{{ url('public/home') }}/js/main.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/224cad339f.js" crossorigin="anonymous"></script>
+    @yield('js')
     <script>
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 4,

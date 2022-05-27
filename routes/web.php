@@ -29,6 +29,7 @@ Route::get('/don-dat-cho/{codeOrder}' ,'HomeController@EditOrder')->name('home.E
 Route::post('/don-dat-cho/{codeOrder}' ,'HomeController@UpdateOrder')->name('home.UpdateOrder');
 Route::post('/comment/{CodeOrders}/{idHotel}/{idAdmin}', 'CommentController@store')->name('comment.post');
 Route::PUT('/comment', 'CommentController@update')->name('comment.update');
+Route::post('/comment-post', 'CommentBlogController@post')->name('CommentBlog.post');
 //post
 Route::get('/post' ,'HomeController@post')->name('home.post');
 Route::get('/post/{slug}' ,'HomeController@post_details')->name('home.post_details');
@@ -41,8 +42,7 @@ Route::post('/Login.html', 'LoginController@post_login')->name('login');
 Route::post('/Login-register.html', 'LoginController@store')->name('login.store');
 Route::get('/Logout', 'LoginController@logout')->name('logout');
 
-//Admin
-
+//user management
 
 Route::group(['prefix' => 'user'], function(){
     Route::get('/', 'AdminController@dasboard')->name('user.dasboard');
@@ -62,6 +62,7 @@ Route::group(['prefix' => 'user'], function(){
     Route::get('/{id}', 'DasboardController@hotel')->name('room.hotel');
 });
 
+// admin management
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function(){
 
     Route::get('Dasboard', 'AdminDasboardController@index')->name('Dasboard.index');
@@ -93,4 +94,5 @@ Route::group(['prefix' => 'API'], function(){
     Route::post('/HotelBrand', 'ApiController@HotelBrand')->name('HotelBrand');
     Route::post('/ApplyPromo', 'ApiController@ApplyPromo')->name('ApplyPromo');
     Route::post('/branchHotel_Confort', 'ApiController@branchHotel_Confort')->name('branchHotel_Confort');
+    Route::post('/btnSearch', 'ApiController@btnSearch')->name('btnSearch');
 });
